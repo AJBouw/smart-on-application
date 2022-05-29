@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "dgSpecHash": "12jmb619TsnZLAU/5f552/bq+pLTMJCjUG03OB1byKfdhbLydFaAy6OwmyvZULGjmrhpUNeFWN+kmiQ80Ha7xQ==",
+  "success": true,
+  "projectFilePath": "/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp.Shared/SmartOnApp.Shared.csproj",
+  "expectedPackageFiles": [
+    "/Users/angelajanebouw/.nuget/packages/microsoft.entityframeworkcore/5.0.17/microsoft.entityframeworkcore.5.0.17.nupkg.sha512",
+    "/Users/angelajanebouw/.nuget/packages/microsoft.entityframeworkcore.abstractions/5.0.17/microsoft.entityframeworkcore.abstractions.5.0.17.nupkg.sha512",
+    "/Users/angelajanebouw/.nuget/packages/microsoft.entityframeworkcore.analyzers/5.0.17/microsoft.entityframeworkcore.analyzers.5.0.17.nupkg.sha512",
+    "/Users/angelajanebouw/.nuget/packages/microsoft.extensions.caching.abstractions/5.0.0/microsoft.extensions.caching.abstractions.5.0.0.nupkg.sha512",
+    "/Users/angelajanebouw/.nuget/packages/microsoft.extensions.caching.memory/5.0.0/microsoft.extensions.caching.memory.5.0.0.nupkg.sha512",
+    "/Users/angelajanebouw/.nuget/packages/microsoft.extensions.dependencyinjection/5.0.2/microsoft.extensions.dependencyinjection.5.0.2.nupkg.sha512",
+    "/Users/angelajanebouw/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/5.0.0/microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+    "/Users/angelajanebouw/.nuget/packages/microsoft.extensions.logging/5.0.0/microsoft.extensions.logging.5.0.0.nupkg.sha512",
+    "/Users/angelajanebouw/.nuget/packages/microsoft.extensions.logging.abstractions/5.0.0/microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
+    "/Users/angelajanebouw/.nuget/packages/microsoft.extensions.options/5.0.0/microsoft.extensions.options.5.0.0.nupkg.sha512",
+    "/Users/angelajanebouw/.nuget/packages/microsoft.extensions.primitives/5.0.0/microsoft.extensions.primitives.5.0.0.nupkg.sha512",
+    "/Users/angelajanebouw/.nuget/packages/system.collections.immutable/5.0.0/system.collections.immutable.5.0.0.nupkg.sha512",
+    "/Users/angelajanebouw/.nuget/packages/system.componentmodel.annotations/5.0.0/system.componentmodel.annotations.5.0.0.nupkg.sha512",
+    "/Users/angelajanebouw/.nuget/packages/system.diagnostics.diagnosticsource/5.0.1/system.diagnostics.diagnosticsource.5.0.1.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file /Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp.Shared/obj/project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
+}
