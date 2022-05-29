@@ -1,18 +1,26 @@
 ﻿<Properties StartupConfiguration="{F47E63CE-91CC-4AC6-A424-B32956A4716A}|Default">
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="SmartOnApp.WebAPI/Startup.cs">
+    <Files>
+      <File FileName="SmartOnApp.WebAPI/Startup.cs" Line="1" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="SmartOnApplication" expanded="True" selected="True">
-            <Node name="SmartOnApp" expanded="True" />
+          <Node name="SmartOnApplication" expanded="True">
+            <Node name="SmartOnApp.WebAPI" expanded="True">
+              <Node name="Startup.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.SmartOnApp.WebAPI FirstBuild="True" />
   <MonoDevelop.Ide.ItemProperties.SmartOnApp.Android PreferredExecutionTarget="Android.Pixel_3a_API_30" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

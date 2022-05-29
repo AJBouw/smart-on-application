@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartOnApp", "SmartOnApp\Sm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartOnApp.Shared", "SmartOnApp.Shared\SmartOnApp.Shared.csproj", "{3625A706-2BC0-487D-A7A9-0ABB52F6032F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartOnApp.WebAPI", "SmartOnApp.WebAPI\SmartOnApp.WebAPI.csproj", "{3F67FCFA-6C7E-4087-9389-3D847AB1946A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{3625A706-2BC0-487D-A7A9-0ABB52F6032F}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{3625A706-2BC0-487D-A7A9-0ABB52F6032F}.Release|iPhone.ActiveCfg = Release|Any CPU
 		{3625A706-2BC0-487D-A7A9-0ABB52F6032F}.Release|iPhone.Build.0 = Release|Any CPU
+		{3F67FCFA-6C7E-4087-9389-3D847AB1946A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F67FCFA-6C7E-4087-9389-3D847AB1946A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F67FCFA-6C7E-4087-9389-3D847AB1946A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F67FCFA-6C7E-4087-9389-3D847AB1946A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F67FCFA-6C7E-4087-9389-3D847AB1946A}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{3F67FCFA-6C7E-4087-9389-3D847AB1946A}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{3F67FCFA-6C7E-4087-9389-3D847AB1946A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{3F67FCFA-6C7E-4087-9389-3D847AB1946A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{3F67FCFA-6C7E-4087-9389-3D847AB1946A}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{3F67FCFA-6C7E-4087-9389-3D847AB1946A}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{3F67FCFA-6C7E-4087-9389-3D847AB1946A}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{3F67FCFA-6C7E-4087-9389-3D847AB1946A}.Release|iPhone.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
