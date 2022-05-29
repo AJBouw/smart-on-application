@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:localfont="clr-namespace:SmartOnApp.Resources.Icons"
+             xmlns:landingpage="clr-namespace:SmartOnApp.Views.LandingPage"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="SmartOnApp.MainPage"
+             NavigationPage.HasNavigationBar="False">
+
+ <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Aqua">#3EC8C8</Color>
+            <Color x:Key="GrayLight">#aaaaaa</Color>
+            <Color x:Key="GrayBlack">#1e1e1e</Color>
+            <Color x:Key="WhiteBright">#ededed</Color>
+            <Color x:Key="WhiteLight">#FFFFFF</Color>
+
+            <ControlTemplate
+                x:Key="TabItemControlTemplate">
+                <Grid
+                    RowDefinitions="*,*"
+                    RowSpacing="0"
+                    BackgroundColor="{x:StaticResource GrayBlack}">
+
+                    <Image
+                    Grid.Row="0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    WidthRequest="25"
+                    HeightRequest="25"
+                    Margin="0,10,0,5"
+                    Source="{TemplateBinding CurrentIcon}"/>
+
+                    <Label
+                        Grid.Row="1"
+                        HorizontalOptions="Center"
+                        FontFamily="TimesNewRoman"
+                        FontSize="12"
+                        Text="{TemplateBinding Text}"
+                        TextColor="{x:StaticResource WhiteLight}"/>
+                </Grid>
+
+            </ControlTemplate>
+            <Style
+                x:Key="CustomTabStyle"
+                TargetType="xct:TabView">
+                <Setter
+                    Property="IsTabTransitionEnabled"
+                    Value="True"/>
+                <Setter
+                    Property="TabStripHeight"
+                    Value="48"/>
+                <Setter
+                    Property="TabStripPlacement"
+                    Value="Bottom"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid>
+            <xct:TabView Style="{StaticResource CustomTabStyle}">
+                <xct:TabView.TabStripBackgroundView>
+                    <BoxView Background="White" WidthRequest="30" CornerRadius="20,20,0,0"/>
+                </xct:TabView.TabStripBackgroundView>
+
+                <xct:TabViewItem
+                    x:Name="Tab1"
+                    ControlTemplate="{StaticResource TabItemControlTemplate}"
+                    FontFamily="TimesNewRoman"
+                    Text="Home">
+                    <xct:TabViewItem.Icon>
+                        <FontImageSource
+                            Color="{x:StaticResource Aqua}"
+                            FontFamily="MaterialDesignIcons"
+                            Glyph="{x:Static localfont:MaterialDesignIcon.Home}"/>
+                    </xct:TabViewItem.Icon>
+                    <xct:TabViewItem.IconSelected>
+                        <FontImageSource
+                            Color="{x:StaticResource Aqua}"
+                            FontFamily="MaterialDesignIcons"
+                            Glyph="{x:Static localfont:MaterialDesignIcon.Home}"/>
+                    </xct:TabViewItem.IconSelected>
+                    <landingpage:LandingPageView></landingpage:LandingPageView>
+                </xct:TabViewItem>
+
+                <xct:TabViewItem
+                    x:Name="Tab2"
+                    ControlTemplate="{StaticResource TabItemControlTemplate}"
+                    FontFamily="TimesNewRoman"
+                    Text="Camera">
+                    <xct:TabViewItem.Icon>
+                        <FontImageSource
+                            Color="{x:StaticResource Aqua}"
+                            FontFamily="MaterialDesignIcons"
+                            Glyph="{x:Static localfont:MaterialDesignIcon.Video}"/>
+                    </xct:TabViewItem.Icon>
+                    <xct:TabViewItem.IconSelected>
+                        <FontImageSource
+                            Color="{x:StaticResource Aqua}"
+                            FontFamily="MaterialDesignIcons"
+                            Glyph="{x:Static localfont:MaterialDesignIcon.Video}"/>
+                    </xct:TabViewItem.IconSelected>
+                </xct:TabViewItem>
+
+                <xct:TabViewItem
+                    x:Name="Tab3"
+                    ControlTemplate="{StaticResource TabItemControlTemplate}"
+                    FontFamily="TimesNewRoman"
+                    Text="TimeSwitch">
+                    <xct:TabViewItem.Icon>
+                        <FontImageSource
+                            Color="{x:StaticResource Aqua}"
+                            FontFamily="MaterialDesignIcons"
+                            Glyph="{x:Static localfont:MaterialDesignIcon.Calendar}"/>
+                    </xct:TabViewItem.Icon>
+                    <xct:TabViewItem.IconSelected>
+                        <FontImageSource
+                            Color="{x:StaticResource Aqua}"
+                            FontFamily="MaterialDesignIcons"
+                            Glyph="{x:Static localfont:MaterialDesignIcon.Calendar}"/>
+                    </xct:TabViewItem.IconSelected>
+                    
+                </xct:TabViewItem>
+
+                <xct:TabViewItem
+                    x:Name="Tab4"
+                    ControlTemplate="{StaticResource TabItemControlTemplate}"
+                    FontFamily="TimesNewRoman"
+                    Text="About">
+                    <xct:TabViewItem.Icon>
+                        <FontImageSource
+                            Color="{x:StaticResource Aqua}"
+                            FontFamily="MaterialDesignIcons"
+                            Glyph="{x:Static localfont:MaterialDesignIcon.Information}"/>
+                    </xct:TabViewItem.Icon>
+                    <xct:TabViewItem.IconSelected>
+                        <FontImageSource
+                            Color="{x:StaticResource Aqua}"
+                            FontFamily="MaterialDesignIcons"
+                            Glyph="{x:Static localfont:MaterialDesignIcon.Information}"/>
+                    </xct:TabViewItem.IconSelected>
+                    
+                </xct:TabViewItem>
+
+                <xct:TabViewItem
+                    x:Name="Tab5"
+                    ControlTemplate="{StaticResource TabItemControlTemplate}"
+                    FontFamily="TimesNewRoman"
+                    Text="Settings">
+                    <xct:TabViewItem.Icon>
+                        <FontImageSource
+                            Color="{x:StaticResource Aqua}"
+                            FontFamily="MaterialDesignIcons"
+                            Glyph="{x:Static localfont:MaterialDesignIcon.Cog}"/>
+                    </xct:TabViewItem.Icon>
+                    <xct:TabViewItem.IconSelected>
+                        <FontImageSource
+                            Color="{x:StaticResource Aqua}"
+                            FontFamily="MaterialDesignIcons"
+                            Glyph="{x:Static localfont:MaterialDesignIcon.Cog}"/>
+                    </xct:TabViewItem.IconSelected>
+                    
+                </xct:TabViewItem>
+            </xct:TabView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+

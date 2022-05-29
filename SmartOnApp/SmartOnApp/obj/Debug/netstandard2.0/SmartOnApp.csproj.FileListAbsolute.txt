@@ -1,0 +1,15 @@
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/bin/Debug/netstandard2.0/SmartOnApp.deps.json
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/bin/Debug/netstandard2.0/SmartOnApp.dll
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/bin/Debug/netstandard2.0/ref/SmartOnApp.dll
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/bin/Debug/netstandard2.0/SmartOnApp.pdb
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/obj/Debug/netstandard2.0/SmartOnApp.csproj.AssemblyReference.cache
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/obj/Debug/netstandard2.0/App.xaml.g.cs
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/obj/Debug/netstandard2.0/MainPage.xaml.g.cs
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/obj/Debug/netstandard2.0/Views/LandingPage/LandingPageView.xaml.g.cs
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/obj/Debug/netstandard2.0/SmartOnApp.AssemblyInfoInputs.cache
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/obj/Debug/netstandard2.0/SmartOnApp.AssemblyInfo.cs
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/obj/Debug/netstandard2.0/SmartOnApp.csproj.CoreCompileInputs.cache
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/obj/Debug/netstandard2.0/XamlC.stamp
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/obj/Debug/netstandard2.0/SmartOnApp.dll
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/obj/Debug/netstandard2.0/ref/SmartOnApp.dll
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp/SmartOnApp/obj/Debug/netstandard2.0/SmartOnApp.pdb

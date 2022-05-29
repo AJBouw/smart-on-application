@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Serilog" Version="2.11.0" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+    <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Xamarin.CommunityToolkit" />
+    <None Remove="Resources\" />
+    <None Remove="Resources\Fonts\" />
+    <None Remove="Resources\Icons\" />
+    <None Remove="Resources\Icons\MaterialDesignIcons.ttf" />
+    <None Remove="Resources\Fonts\FA5Regular.otf" />
+    <None Remove="Resources\Fonts\SamanthaRegular400.ttf" />
+    <None Remove="Resources\Fonts\TimesNewRoman.otf" />
+    <None Remove="ViewModels\" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Serilog" />
+    <None Remove="Refractored.MvvmHelpers" />
+    <None Remove="System.Net.Http.Json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Folder Include="Resources\Fonts\" />
+    <Folder Include="Resources\Icons\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Icons\MaterialDesignIcons.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\FA5Regular.otf" />
+    <EmbeddedResource Include="Resources\Fonts\SamanthaRegular400.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\TimesNewRoman.otf" />
+  </ItemGroup>
+</Project>
