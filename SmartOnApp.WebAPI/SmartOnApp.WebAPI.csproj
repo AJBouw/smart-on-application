@@ -19,6 +19,13 @@
     <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
     <None Remove="RepositoryLayer\" />
     <None Remove="RepositoryLayer\EntityMapper\" />
+    <None Remove="UserInterfaceLayer\" />
+    <None Remove="UserInterfaceLayer\Controllers\" />
+    <None Remove="RepositoryLayer\Repositories\" />
+    <None Remove="RepositoryLayer\Interfaces\" />
+    <None Remove="ServiceLayer\" />
+    <None Remove="ServiceLayer\Interfaces\" />
+    <None Remove="ServiceLayer\Services\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
@@ -40,6 +47,13 @@
   <ItemGroup>
     <Folder Include="RepositoryLayer\" />
     <Folder Include="RepositoryLayer\EntityMapper\" />
+    <Folder Include="UserInterfaceLayer\" />
+    <Folder Include="UserInterfaceLayer\Controllers\" />
+    <Folder Include="RepositoryLayer\Repositories\" />
+    <Folder Include="RepositoryLayer\Interfaces\" />
+    <Folder Include="ServiceLayer\" />
+    <Folder Include="ServiceLayer\Interfaces\" />
+    <Folder Include="ServiceLayer\Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SmartOnApp.Shared\SmartOnApp.Shared.csproj">

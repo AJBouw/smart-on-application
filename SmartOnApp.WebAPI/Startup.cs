@@ -6,10 +6,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using SmartOnApp.WebAPI.RepositoryLayer;
+using SmartOnApp.WebAPI.RepositoryLayer.Interfaces;
+using SmartOnApp.WebAPI.RepositoryLayer.Repositories;
 
 namespace SmartOnApp.WebAPI
 {
@@ -64,6 +69,9 @@ namespace SmartOnApp.WebAPI
                     .EnableSensitiveDataLogging()
                     .EnableDetailedErrors()
             );
+
+            // Services injected
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

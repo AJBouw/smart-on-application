@@ -1,22 +1,21 @@
 ﻿<Properties StartupConfiguration="{F47E63CE-91CC-4AC6-A424-B32956A4716A}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="SmartOnApp.WebAPI/Startup.cs">
-    <Files>
-      <File FileName="SmartOnApp.WebAPI/Startup.cs" Line="59" Column="41" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="SmartOnApplication" expanded="True">
-            <Node name="SmartOnApp.Shared" expanded="True">
-              <Node name="DomainLayer" expanded="True">
-                <Node name="Models" expanded="True" />
-              </Node>
-            </Node>
+            <Node name="SmartOnApp.iOS" expanded="True" />
             <Node name="SmartOnApp.WebAPI" expanded="True">
               <Node name="RepositoryLayer" expanded="True">
-                <Node name="EntityMapper" expanded="True" />
+                <Node name="Interfaces" expanded="True" />
+                <Node name="Repositories" expanded="True">
+                  <Node name="McuRepostiory.cs" selected="True" />
+                </Node>
               </Node>
-              <Node name="Startup.cs" selected="True" />
+              <Node name="ServiceLayer" expanded="True" />
+              <Node name="UserInterfaceLayer" expanded="True">
+                <Node name="Controllers" expanded="True" />
+              </Node>
             </Node>
           </Node>
         </State>
