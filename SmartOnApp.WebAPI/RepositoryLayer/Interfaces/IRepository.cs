@@ -27,4 +27,3 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Interfaces
         void Update(T entity);
     }
 }
-}
