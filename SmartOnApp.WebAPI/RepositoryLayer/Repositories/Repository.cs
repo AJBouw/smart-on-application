@@ -8,82 +8,47 @@ using SmartOnApp.WebAPI.RepositoryLayer.Interfaces;
 
 namespace SmartOnApp.WebAPI.RepositoryLayer.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class, new()
     {
-        private readonly SmartOnDbContext _smartOnDbContext;
-        private readonly DbSet<T> _dbSet;
+        private readonly SmartOnDbContext _db;
 
-        public Repository(SmartOnDbContext smartOnDbContext)
+        public Repository(SmartOnDbContext db) => _db = db;
+
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            _smartOnDbContext = smartOnDbContext;
-            _dbSet = _smartOnDbContext.Set<T>();
-        }
+            var entities = await _db.Set<T>().AsNoTracking().ToListAsync();
+            return entities;
+        }//GetallAsync
 
-        public async Task<IList<T>> GetAll(Expression<Func<T, bool>> expression = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<string> includes = null)
+        public async Task<T> GetByIdAsync(int id)
         {
-            IQueryable<T> query = _dbSet;
+            return await _db.Set<T>().FindAsync(id);
 
-            if (expression != null)
-            {
-                query = query.Where(expression);
-            }
+            // Or
+            // var entity = await db.Set<T>().FindAsync(id);
+            // return entity;
+        }//GetByIdAsync
 
-            if (includes != null)
-            {
-                foreach (var includeProperty in includes)
-                {
-                    query = query.Include(includeProperty);
-                }
-            }
-
-            if (orderBy != null)
-            {
-                query = orderBy(query);
-            }
-
-            return await query.AsNoTracking().ToListAsync();
-        }
-
-        public async Task<T> Get(Expression<Func<T, bool>> expression, List<string> includes = null)
+        public async Task<bool> CreateAsync(T entity)
         {
-            IQueryable<T> query = _dbSet;
+            await _db.Set<T>().AddAsync(entity);
+            int numRowsEffected = await _db.SaveChangesAsync();
+            return numRowsEffected > 0;
+        }//CreateAsync
 
-            if (includes != null)
-            {
-                foreach (var includeProperty in includes)
-                {
-                    query = query.Include(includeProperty);
-                }
-            }
-
-            return await query.AsNoTracking().FirstOrDefaultAsync(expression);
-        }
-
-        public async Task Insert(T entity)
+        public async Task<bool> UpdateAsync(T entity)
         {
-            await _dbSet.AddAsync(entity);
-        }
+            _db.Set<T>().Update(entity);
+            int numRowsEffected = await _db.SaveChangesAsync();
+            return numRowsEffected > 0;
+        }//UpdateAsync
 
-        public async Task InsertRange(IEnumerable<T> entities)
+        public async Task<bool> DeleteAsync(int id)
         {
-            await _dbSet.AddRangeAsync(entities);
-        }
-
-        public async Task Delete(int id)
-        {
-            var entity = await _dbSet.FindAsync(id);
-            _dbSet.Remove(entity);
-        }
-
-        public void DeleteRange(IEnumerable<T> entities)
-        {
-            _dbSet.RemoveRange(entities);
-        }
-
-        public void Update(T entity)
-        {
-            _dbSet.Attach(entity);
-            _smartOnDbContext.Entry(entity).State = EntityState.Modified;
-        }
+            var entityToDelete = await GetByIdAsync(id);
+            _db.Set<T>().Remove(entityToDelete);
+            int numRowEffected = await _db.SaveChangesAsync();
+            return numRowEffected > 0;
+        }//DeleteAsync
     }
 }
