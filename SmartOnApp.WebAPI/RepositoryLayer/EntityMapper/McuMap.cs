@@ -23,16 +23,18 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
                 .HasColumnType("datetime");
             builder.Property(x => x.McuName)
                 .HasColumnName("mcu_name")
-                .HasColumnName("VARCHAR(30)");
+                .HasColumnType("VARCHAR(30)");
+            builder.Property(x => x.McuMacAddress)
+                .HasColumnName("mcu_mac_address");
             builder.Property(x => x.McuIp)
                 .HasColumnName("mcu_ip")
-                .HasColumnName("VARCHAR(20)");
+                .HasColumnType("VARCHAR(20)");
             builder.Property(x => x.McuHostname)
                 .HasColumnName("mcu_hostname")
-                .HasColumnName("VARCHAR(50");
+                .HasColumnType("VARCHAR(50)");
             builder.Property(x => x.McuName)
                 .HasColumnName("location")
-                .HasColumnName("VARCHAR(50)");
+                .HasColumnType("VARCHAR(50)");
         }
     }
 }

@@ -11,7 +11,8 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
         {
             builder.Property(x => x.Timestamp)
                 .ValueGeneratedOnAdd()
-                .HasColumnName("timestamp");
+                .HasColumnName("timestamp")
+                .HasColumnType("datetime");
             builder.Property(x => x.ServoCurrentPosition)
                 .HasColumnName("servo_current_position")
                 .HasColumnName("INT");
