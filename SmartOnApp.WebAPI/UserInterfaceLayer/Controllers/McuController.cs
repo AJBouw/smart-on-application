@@ -12,11 +12,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
     [ApiController]
     public class McuController : ControllerBase
     {
-        private readonly IMcuRepository _mcuRepository;
+        
 
-        public McuController(IMcuRepository mcuRepository) => _mcuRepository = mcuRepository;
-
-        [HttpGet]
-        public async Task<IActionResult> GetMcus() => Ok(value: await _mcuRepository.GetAll());
     }
 }

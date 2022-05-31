@@ -68,8 +68,7 @@ namespace SmartOnApp.WebAPI
 
             
             // Services injected
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<IMcuRepository, McuRepository>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

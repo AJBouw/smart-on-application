@@ -1,39 +1,40 @@
 ﻿<Properties StartupConfiguration="{3F67FCFA-6C7E-4087-9389-3D847AB1946A}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="SmartOnApp.WebAPI/RepositoryLayer/Repositories/Repository.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SmartOnApp.WebAPI/Startup.cs">
     <Files>
-      <File FileName="SmartOnApp.WebAPI/UserInterfaceLayer/Controllers/McuController.cs" Line="19" Column="18" />
-      <File FileName="SmartOnApp.WebAPI/Properties/launchSettings.json" Line="23" Column="40" />
-      <File FileName="SmartOnApp.WebAPI/RepositoryLayer/Interfaces/IRepository.cs" Line="15" Column="15" />
-      <File FileName="SmartOnApp.WebAPI/RepositoryLayer/Repositories/Repository.cs" Line="11" Column="64" />
-      <File FileName="SmartOnApp.WebAPI/RepositoryLayer/Repositories/ServoRepository.cs" Line="1" Column="1" />
-      <File FileName="SmartOnApp.WebAPI/RepositoryLayer/Repositories/LdrRepository.cs" Line="1" Column="1" />
-      <File FileName="SmartOnApp.WebAPI/RepositoryLayer/Repositories/McuRepostiory.cs" Line="7" Column="65" />
-      <File FileName="SmartOnApp.WebAPI/RepositoryLayer/Repositories/PirRepository.cs" Line="1" Column="1" />
+      <File FileName="SmartOnApp.WebAPI/UserInterfaceLayer/Controllers/McuController.cs" Line="15" Column="9" />
+      <File FileName="SmartOnApp.Shared/DomainLayer/Models/Mcu.cs" Line="1" Column="1" />
+      <File FileName="SmartOnApp.Shared/DomainLayer/Models/IoTDevice.cs" Line="1" Column="1" />
+      <File FileName="SmartOnApp.WebAPI/RepositoryLayer/EntityMapper/IoTDeviceMap.cs" Line="32" Column="38" />
+      <File FileName="SmartOnApp.WebAPI/RepositoryLayer/EntityMapper/McuMap.cs" Line="1" Column="1" />
+      <File FileName="SmartOnApp.WebAPI/RepositoryLayer/SmartOnDbContext.cs" Line="1" Column="1" />
+      <File FileName="SmartOnApp.WebAPI/Startup.cs" Line="72" Column="65" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Option id="ShowAllFiles" value="True" />
           <Node name="SmartOnApplication" expanded="True">
-            <Node name="SmartOnApp.WebAPI" expanded="True">
-              <Node name="Properties" expanded="True" />
-              <Node name="RepositoryLayer" expanded="True">
-                <Node name="Interfaces" expanded="True" />
-                <Node name="Repositories" expanded="True">
-                  <Node name="Repository.cs" selected="True" />
-                </Node>
+            <Node name="SmartOnApp.Shared" expanded="True">
+              <Node name="DomainLayer" expanded="True">
+                <Node name="Models" expanded="True" />
               </Node>
+            </Node>
+            <Node name="SmartOnApp.WebAPI" expanded="True">
+              <Node name="obj" expanded="True" />
+              <Node name="RepositoryLayer" expanded="True" />
               <Node name="ServiceLayer" expanded="True" />
               <Node name="UserInterfaceLayer" expanded="True">
                 <Node name="Controllers" expanded="True" />
               </Node>
+              <Node name="appsettings.json" expanded="True" />
+              <Node name="Startup.cs" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.SmartOnApp.WebAPI PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.ItemProperties.SmartOnApp.WebAPI PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.ItemProperties.SmartOnApp.Android PreferredExecutionTarget="Android.Pixel_3a_API_30" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
