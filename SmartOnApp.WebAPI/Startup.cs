@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using SmartOnApp.WebAPI.RepositoryLayer;
 using SmartOnApp.WebAPI.RepositoryLayer.Interfaces;
 using SmartOnApp.WebAPI.RepositoryLayer.Repositories;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace SmartOnApp.WebAPI
 {
@@ -30,7 +31,14 @@ namespace SmartOnApp.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            // Register MariaDb database context
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 27));
+
+            services.AddDbContextPool<SmartOnDbContext>(
+                options => options.UseMySql(
+                    Configuration.GetConnectionString("MariaDbConnectionString"), serverVersion,
+                    options => options.EnableRetryOnFailure()));
+
             // Register Json serializer
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -58,22 +66,10 @@ namespace SmartOnApp.WebAPI
                 );
             });
 
-            // Register MariaDb database context
-            var serverVersion = new MySqlServerVersion(new Version(8, 0, 27));
-
-            services.AddDbContext<SmartOnDbContext>(
-                dbContextOptions => dbContextOptions
-                    .UseMySql(Configuration.GetConnectionString("MariaDbConnectionString"), serverVersion)
-                    // TODO : Do not forget to change or remove for production
-                    // The following three options help with debugging
-                    // Should be changed or removed for production.
-                    .LogTo(Console.WriteLine, LogLevel.Information)
-                    .EnableSensitiveDataLogging()
-                    .EnableDetailedErrors()
-            );
-
+            
             // Services injected
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IMcuRepository, McuRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
