@@ -35,10 +35,7 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
                 .HasColumnType("VARCHAR(50)");
             builder.Property(x => x.McuName)
                 .HasColumnName("location")
-                .HasColumnType("VARCHAR(50)");
-            //builder.HasMany(x => x.IoTDevices)
-            //    .WithOne(x => x.Mcu)
-            //    .HasForeignKey(y => y.McuId).IsRequired();
+                .HasColumnType("VARCHAR(50)");;
         }
     }
 }
