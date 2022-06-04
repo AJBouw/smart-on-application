@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SmartOnApp.Shared.DomainLayer.Models;
@@ -16,9 +17,11 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Repositories
             _db = db;
         }
 
-        public async Task<IEnumerable<Mcu>> GetAllMcuAsync()
+        public async Task<IEnumerable<Mcu>> GetAllMcuIncludeAsync()
         {
-            return await _db.mcu.ToListAsync();
+            return await _db.mcu
+                .Include(x => x.IoTDevices)
+                .ToListAsync();
         } 
     }
 }

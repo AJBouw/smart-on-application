@@ -9,9 +9,10 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
     {
         public void Configure(EntityTypeBuilder<Mcu> builder)
         {
+            builder.ToTable("mcu");
             builder.Property(x => x.Id)
                 .ValueGeneratedOnAdd()
-                .HasColumnName("id")
+                .HasColumnName("mcu_id")
                 .HasColumnType("INT");
             builder.Property(x => x.CreatedAt)
                 .ValueGeneratedOnAdd()
@@ -35,6 +36,9 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
             builder.Property(x => x.McuName)
                 .HasColumnName("location")
                 .HasColumnType("VARCHAR(50)");
+            //builder.HasMany(x => x.IoTDevices)
+            //    .WithOne(x => x.Mcu)
+            //    .HasForeignKey(y => y.McuId).IsRequired();
         }
     }
 }

@@ -9,9 +9,10 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
     {
         public void Configure(EntityTypeBuilder<IoTDevice> builder)
         {
+            builder.ToTable("iot_device");
             builder.Property(x => x.Id)
                 .ValueGeneratedOnAdd()
-                .HasColumnName("id")
+                .HasColumnName("iot_device_id")
                 .HasColumnType("INT");
             builder.Property(x => x.CreatedAt)
                 .ValueGeneratedOnAdd()
