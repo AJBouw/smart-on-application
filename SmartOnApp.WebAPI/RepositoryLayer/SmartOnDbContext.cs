@@ -8,9 +8,9 @@ namespace SmartOnApp.WebAPI.RepositoryLayer
     public class SmartOnDbContext : DbContext
     {
         public DbSet<IoTDevice> iot_device { get; set; }
-        public DbSet<Mcu> mcu { get; set; }
         public DbSet<Ldr> ldr { get; set; }
         public DbSet<Light> light { get; set; }
+        public DbSet<Mcu> mcu { get; set; }
         public DbSet<Pir> pir { get; set; }
         public DbSet<Servo> servo { get; set; }
 
