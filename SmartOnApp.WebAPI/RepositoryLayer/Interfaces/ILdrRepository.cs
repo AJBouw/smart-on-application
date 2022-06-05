@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using SmartOnApp.Shared.DomainLayer.Models;
+
 namespace SmartOnApp.WebAPI.RepositoryLayer.Interfaces
 {
-    public class IIoTDeviceRepository
+    public interface ILdrRepository
     {
-        public IIoTDeviceRepository()
-        {
-        }
+        Task<IEnumerable<Ldr>> GetAllLdrIncludeByMacAddressAsync(string macAddress);
     }
 }
