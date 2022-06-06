@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using SmartOnApp.WebAPI.RepositoryLayer;
 using SmartOnApp.WebAPI.RepositoryLayer.Interfaces;
 using SmartOnApp.WebAPI.RepositoryLayer.Repositories;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using SmartOnApp.WebAPI.UserInterfaceLayer.DataTransferObjectMapper;
 
 namespace SmartOnApp.WebAPI
 {
@@ -44,6 +38,9 @@ namespace SmartOnApp.WebAPI
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             //services.AddControllers();
 
+            // Register AutoMapper
+            services.AddAutoMapper(typeof(MapperInitializer));
+
             // Register Swagger
             services.AddSwaggerGen(options =>
             {
@@ -66,9 +63,11 @@ namespace SmartOnApp.WebAPI
                 );
             });
 
-            
+
             // Services injected
-            
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IMcuRepository, McuRepository>();
+            services.AddScoped<ILdrRepository, LdrRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
