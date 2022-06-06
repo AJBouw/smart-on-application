@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SmartOnApp.Shared.DomainLayer.Models;
 using SmartOnApp.WebAPI.RepositoryLayer.Interfaces;
+using SmartOnApp.WebAPI.UserInterfaceLayer.DataTransferObjects;
 
 namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
 {
@@ -15,23 +19,58 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMcuRepository _mcuRepository;
+        private readonly ILogger<McuController> _logger;
+        private readonly IMapper _mapper;
 
-        public McuController(IUnitOfWork unitOfWork, IMcuRepository mcuRepository)
+        public McuController(IUnitOfWork unitOfWork, IMcuRepository mcuRepository, ILogger<McuController> logger, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mcuRepository = mcuRepository;
+            _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Mcu>> GetAllMcu()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllMcuInclude()
         {
-            return await _unitOfWork.mcu.GetAllAsync();
+            try
+            {
+                var allMcu = await _mcuRepository.GetAllMcuIncludeAsync();
+                var result = _mapper.Map<IList<McuDTO>>(allMcu);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllMcuInclude)}");
+                return StatusCode(500, "Internal server error. Please, try again later.");
+            }
+
         }
 
-        [HttpGet("include")]
-        public async Task<IEnumerable<Mcu>> GetAllMcuInclude()
+        [HttpGet("{macAddress}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllMcuIncludeByMacAddress(string macAddress)
         {
-            return await _mcuRepository.GetAllMcuIncludeAsync();
+            if (string.IsNullOrEmpty(macAddress))
+            {
+                return new BadRequestObjectResult("MAC address must not be null or empty");
+            }
+
+            try
+            {
+                var allMcuInclude = await _unitOfWork.mcu.GetAsync(x => x.McuMacAddress == macAddress, new List<string> { "IoTDevices" });
+                var result = _mapper.Map<McuDTO>(allMcuInclude);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllMcuIncludeByMacAddress)}");
+                return StatusCode(500, "Internal server error. Please, try again later.");
+            }
+
         }
     }
 }
