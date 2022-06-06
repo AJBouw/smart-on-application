@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SmartOnApp.Shared.DomainLayer.Models;
 
-namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
+namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
 {
-    public class IoTDeviceMap : IEntityTypeConfiguration<IoTDevice>
+    public class IoTDeviceConfiguration : IEntityTypeConfiguration<IoTDevice>
     {
         public void Configure(EntityTypeBuilder<IoTDevice> builder)
         {
@@ -23,11 +23,9 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
                 .HasColumnName("updated_at")
                 .HasColumnType("datetime");
             builder.Property(x => x.IoTDeviceName)
-                .HasColumnName("iot_device_name")
-                .HasColumnType("VARCHAR(50)");
+                .HasColumnName("iot_device_name");
             builder.Property(x => x.IoTDeviceType)
-                .HasColumnName("iot_device_type")
-                .HasColumnType("VARCHAR(20)");
+                .HasColumnName("iot_device_type");
             builder.Property(x => x.McuId)
                 .HasColumnName("mcu_id")
                 .HasColumnType("INT");
