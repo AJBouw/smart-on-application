@@ -1,7 +1,7 @@
 ﻿using System;
 using SmartOnApp.Shared.DomainLayer.Models;
 using Microsoft.EntityFrameworkCore;
-using SmartOnApp.WebAPI.RepositoryLayer.EntityMapper;
+using SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration;
 
 namespace SmartOnApp.WebAPI.RepositoryLayer
 {
@@ -20,12 +20,12 @@ namespace SmartOnApp.WebAPI.RepositoryLayer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new IoTDeviceMap());
-            modelBuilder.ApplyConfiguration(new LdrMap());
-            modelBuilder.ApplyConfiguration(new LightMap());
-            modelBuilder.ApplyConfiguration(new McuMap());
-            modelBuilder.ApplyConfiguration(new PirMap());
-            modelBuilder.ApplyConfiguration(new ServoMap());
+            modelBuilder.ApplyConfiguration(new IoTDeviceConfiguration());
+            modelBuilder.ApplyConfiguration(new LdrConfiguration());
+            modelBuilder.ApplyConfiguration(new LightConfiguration());
+            modelBuilder.ApplyConfiguration(new McuConfiguration());
+            modelBuilder.ApplyConfiguration(new PirConfiguration());
+            modelBuilder.ApplyConfiguration(new ServoConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
