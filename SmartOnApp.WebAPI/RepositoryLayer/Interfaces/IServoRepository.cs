@@ -1,10 +1,8 @@
 ﻿using System;
 namespace SmartOnApp.WebAPI.RepositoryLayer.Interfaces
 {
-    public class ISerboRepository
+    public interface ISerboRepository
     {
-        public ISerboRepository()
-        {
-        }
+        
     }
 }

@@ -1,10 +1,15 @@
 ﻿using System;
+using SmartOnApp.Shared.DomainLayer.Models;
+
 namespace SmartOnApp.WebAPI.RepositoryLayer.Repositories
 {
-    public class ServoRepository
+    public class ServoRepository : GenericRepository<Servo>, IServoRepository
     {
-        public ServoRepository()
+        private readonly SmartOnDbContext _db;
+
+        public ServoRepository(SmartOnDbContext db) : base(db)
         {
+            _db = db;
         }
     }
 }
