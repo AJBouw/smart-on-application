@@ -33,7 +33,7 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Repositories
             GC.SuppressFinalize(this);
         }
 
-        public async Task Save()
+        public async Task SaveAsync()
         {
             await _smartOnDbContext.SaveChangesAsync();
         }
