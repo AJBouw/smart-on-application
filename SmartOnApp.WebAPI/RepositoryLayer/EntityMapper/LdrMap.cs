@@ -9,6 +9,7 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
     {
         public void Configure(EntityTypeBuilder<Ldr> builder)
         {
+            builder.ToTable("ldr");
             builder.Property(x => x.Timestamp)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("timestamp")
