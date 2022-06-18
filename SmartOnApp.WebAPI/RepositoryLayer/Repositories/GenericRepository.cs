@@ -20,21 +20,9 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Repositories
             _db = _smartOnDbContext.Set<T>();
         }
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>> expression, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
-        {
-            IQueryable<T> query = _db;
-
-            if (include != null)
-            {
-                query = include(query);
-            }
-
-            return await query.AsNoTracking().FirstOrDefaultAsync(expression);
-        }
-
         public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> expression = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
+            List<string> includes = null)
         {
             IQueryable<T> query = _db;
 
@@ -43,9 +31,12 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Repositories
                 query = query.Where(expression);
             }
 
-            if (include != null)
+            if (includes != null)
             {
-                query = include(query);
+                foreach (var includeProperty in includes)
+                {
+                    query = query.Include(includeProperty);
+                }
             }
 
             if (orderBy != null)
@@ -54,6 +45,21 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Repositories
             }
 
             return await query.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<T> GetAsync(Expression<Func<T, bool>> expression, List<string> includes = null)
+        {
+            IQueryable<T> query = _db;
+
+            if (includes != null)
+            {
+                foreach (var includeProperty in includes)
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
+
+            return await query.AsNoTracking().FirstOrDefaultAsync(expression);
         }
 
         public async Task InsertAsync(T entity)
