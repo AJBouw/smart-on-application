@@ -31,7 +31,7 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
                 .HasColumnName("mcu_ip");
             builder.Property(x => x.McuHostname)
                 .HasColumnName("mcu_hostname");
-            builder.Property(x => x.McuName)
+            builder.Property(x => x.Location)
                 .HasColumnName("location");
         }
     }
