@@ -1,8 +1,9 @@
 ﻿using System;
 namespace SmartOnApp.WebAPI.UserInterfaceLayer.DataTransferObjects
 {
-    public class CreatePirDTO : CreateIoTDeviceDTO
+    public class CreatePirDTO : IoTDeviceDTO
     {
-        
+        public DateTime Timestamp { get; set; }
+        public bool MotionIsDetected { get; set; }
     }
 }

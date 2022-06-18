@@ -1,10 +1,8 @@
 ﻿using System;
 namespace SmartOnApp.WebAPI.UserInterfaceLayer.DataTransferObjects
 {
-    public class PirDTO
+    public class PirDTO : CreatePirDTO
     {
-        public PirDTO()
-        {
-        }
+        
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace SmartOnApp.WebAPI.UserInterfaceLayer.DataTransferObjects
 {
-    public class UpdateMcuDTO
+    public class UpdateMcuDTO : CreateMcuDTO
     {
-        public UpdateMcuDTO()
-        {
-        }
+
     }
 }
