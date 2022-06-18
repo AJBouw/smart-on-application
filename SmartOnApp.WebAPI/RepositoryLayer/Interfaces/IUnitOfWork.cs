@@ -13,6 +13,6 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Interfaces
         IGenericRepository<Pir> pir { get; }
         IGenericRepository<Servo> servo { get; }
 
-        Task Save();
+        Task SaveAsync();
     }
 }
