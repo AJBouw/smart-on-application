@@ -46,13 +46,12 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
                 _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllMcuInclude)}");
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
-
         }
 
-        [HttpGet("{macAddress}")]
+        [HttpGet("{macAddress}", Name = "GetMcuIncludeByMacAddress")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllMcuIncludeByMacAddress(string macAddress)
+        public async Task<IActionResult> GetMcuIncludeByMacAddress(string macAddress)
         {
             if (string.IsNullOrEmpty(macAddress))
             {
@@ -67,10 +66,35 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllMcuIncludeByMacAddress)}");
+                _logger.LogError(ex, $"Something went wrong in the {nameof(GetMcuIncludeByMacAddress)}");
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
+        }
 
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CreateMcu([FromBody] CreateMcuDTO mcuDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError($"Invalid HTTP POST request in {nameof(CreateMcu)}");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var mcu = _mapper.Map<Mcu>(mcuDTO);
+                await _unitOfWork.mcu.InsertAsync(mcu);
+                await _unitOfWork.SaveAsync();
+                return CreatedAtRoute("GetMcuIncludeByMacAddress", new { macAddress = mcu.McuMacAddress }, mcu);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong in the {nameof(CreateMcu)}");
+                return StatusCode(500, "Internal server error. Please, try again later.");
+            }
         }
     }
 }
