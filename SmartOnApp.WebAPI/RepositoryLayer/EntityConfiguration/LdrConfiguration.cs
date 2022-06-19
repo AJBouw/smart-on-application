@@ -15,8 +15,7 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
                 .HasColumnName("timestamp")
                 .HasColumnType("datetime");
             builder.Property(x => x.Brightness)
-                .HasColumnName("brightness")
-                .HasColumnType("INT");
+                .HasColumnName("brightness");
         }
     }
 }

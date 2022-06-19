@@ -12,19 +12,17 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
             builder.ToTable("mcu");
             builder.Property(x => x.Id)
                 .ValueGeneratedOnAdd()
-                .HasColumnName("mcu_id")
-                .HasColumnType("INT");
+                .HasColumnName("mcu_id");
             builder.Property(x => x.CreatedAt)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("created_at")
                 .HasColumnType("datetime");
             builder.Property(x => x.UpdatedAt)
-                .ValueGeneratedOnUpdate()
+                .ValueGeneratedOnAddOrUpdate()
                 .HasColumnName("updated_at")
                 .HasColumnType("datetime");
             builder.Property(x => x.McuName)
-                .HasColumnName("mcu_name")
-                .HasColumnType("VARCHAR(30)");
+                .HasColumnName("mcu_name");
             builder.Property(x => x.McuMacAddress)
                 .HasColumnName("mcu_mac_address");
             builder.Property(x => x.McuIp)

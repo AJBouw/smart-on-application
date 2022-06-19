@@ -15,8 +15,7 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
                 .HasColumnName("timestamp")
                 .HasColumnType("datetime");
             builder.Property(x => x.ServoCurrentPosition)
-                .HasColumnName("servo_current_position")
-                .HasColumnType("INT");
+                .HasColumnName("servo_current_position");
         }
     }
 }

@@ -12,8 +12,7 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
             builder.ToTable("iot_device");
             builder.Property(x => x.Id)
                 .ValueGeneratedOnAdd()
-                .HasColumnName("iot_device_id")
-                .HasColumnType("INT");
+                .HasColumnName("iot_device_id");
             builder.Property(x => x.CreatedAt)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("created_at")
@@ -27,8 +26,7 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
             builder.Property(x => x.IoTDeviceType)
                 .HasColumnName("iot_device_type");
             builder.Property(x => x.McuId)
-                .HasColumnName("mcu_id")
-                .HasColumnType("INT");
+                .HasColumnName("mcu_id");
             builder.HasOne(x => x.Mcu)
                 .WithMany(y => y.IoTDevices)
                 .HasForeignKey(y => y.McuId)
