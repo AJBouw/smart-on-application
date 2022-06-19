@@ -17,7 +17,7 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Repositories
             _db = db;
         }
 
-        public async Task<IEnumerable<Mcu>> GetAllMcuIncludeAsync()
+        public async Task<IList<Mcu>> GetAllMcuIncludeAsync()
         {
             return await _db.mcu
                 .Include(x => x.IoTDevices)
