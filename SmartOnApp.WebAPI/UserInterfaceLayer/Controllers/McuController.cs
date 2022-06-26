@@ -40,7 +40,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
         {
             try
             {
-                var allMcu = await _mcuRepository.GetAllMcuIncludeAsync();
+                var allMcu = await _unitOfWork.mcu.GetAllAsync();
                 var result = _mapper.Map<IList<McuDTO>>(allMcu);
                 return Ok(result);
             }
