@@ -7,6 +7,6 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Interfaces
 {
     public interface IMcuRepository
     {
-        Task<IList<Mcu>> GetAllMcuIncludeAsync();
+
     }
 }

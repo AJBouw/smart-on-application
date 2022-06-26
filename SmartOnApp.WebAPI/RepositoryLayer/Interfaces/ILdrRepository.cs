@@ -8,6 +8,6 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Interfaces
 {
     public interface ILdrRepository
     {
-        Task<IEnumerable<Ldr>> GetAllLdrIncludeByMacAddressAsync(string macAddress);
+
     }
 }
