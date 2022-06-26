@@ -22,7 +22,10 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
         private readonly ILogger<McuController> _logger;
         private readonly IMapper _mapper;
 
-        public McuController(IUnitOfWork unitOfWork, IMcuRepository mcuRepository, ILogger<McuController> logger, IMapper mapper)
+        public McuController(IUnitOfWork unitOfWork,
+            IMcuRepository mcuRepository,
+            ILogger<McuController> logger,
+            IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mcuRepository = mcuRepository;
@@ -60,7 +63,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
 
             try
             {
-                var allMcuInclude = await _unitOfWork.mcu.GetAsync(x => x.McuMacAddress == macAddress, new List<string> { "IoTDevices" });
+                var allMcuInclude = await _unitOfWork.mcu.GetAsync(x => x.McuMacAddress == macAddress, include: y => y.Include(x => x.IoTDevices));
                 var result = _mapper.Map<McuDTO>(allMcuInclude);
                 return Ok(result);
             }
