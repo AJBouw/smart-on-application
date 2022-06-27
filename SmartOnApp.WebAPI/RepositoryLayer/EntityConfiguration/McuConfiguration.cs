@@ -10,6 +10,8 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
         public void Configure(EntityTypeBuilder<Mcu> builder)
         {
             builder.ToTable("mcu");
+            builder.HasIndex(x => x.McuMacAddress)
+                .IsUnique();
             builder.Property(x => x.Id)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("mcu_id");

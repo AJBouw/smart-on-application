@@ -10,6 +10,8 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
         public void Configure(EntityTypeBuilder<Mcu> builder)
         {
             builder.ToTable("mcu");
+            builder.HasIndex(x => x.McuMacAddress)
+                .IsUnique();
             builder.Property(x => x.Id)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("mcu_id")
@@ -19,7 +21,7 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
                 .HasColumnName("created_at")
                 .HasColumnType("datetime");
             builder.Property(x => x.UpdatedAt)
-                .ValueGeneratedOnUpdate()
+                .ValueGeneratedOnAddOrUpdate()
                 .HasColumnName("updated_at")
                 .HasColumnType("datetime");
             builder.Property(x => x.McuName)
