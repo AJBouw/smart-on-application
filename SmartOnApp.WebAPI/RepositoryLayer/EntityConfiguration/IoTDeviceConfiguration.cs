@@ -18,7 +18,7 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
                 .HasColumnName("created_at")
                 .HasColumnType("datetime");
             builder.Property(x => x.UpdatedAt)
-                .ValueGeneratedOnUpdate()
+                .ValueGeneratedOnAddOrUpdate()
                 .HasColumnName("updated_at")
                 .HasColumnType("datetime");
             builder.Property(x => x.IoTDeviceName)
