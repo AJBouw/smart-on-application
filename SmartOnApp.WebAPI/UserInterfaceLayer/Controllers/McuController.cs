@@ -101,7 +101,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -132,6 +132,40 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Something went wrong in the {nameof(UpdateMcu)}");
+                return StatusCode(500, "Internal server error. Please, try again later.");
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteMcu(int id)
+        {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid HTTP PUT request in {nameof(DeleteMcu)}");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var mcu = await _unitOfWork.mcu.GetAsync(x => x.Id == id);
+
+                if (mcu == null)
+                {
+                    _logger.LogError($"Invalid HTTP DELETE request in {nameof(DeleteMcu)}");
+                    return BadRequest("Submitted invalid data");
+                }
+
+                await _unitOfWork.mcu.DeleteAsync(id);
+                await _unitOfWork.SaveAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong in the {nameof(DeleteMcu)}");
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
         }
