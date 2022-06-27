@@ -80,7 +80,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateMcu([FromBody] CreateMcuDTO mcuDTO)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || mcuDTO.McuMacAddress.Count() >= 1)
             {
                 _logger.LogError($"Invalid HTTP POST request in {nameof(CreateMcu)}");
                 return BadRequest(ModelState);
@@ -89,6 +89,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
             try
             {
                 var mcu = _mapper.Map<Mcu>(mcuDTO);
+
                 await _unitOfWork.mcu.InsertAsync(mcu);
                 await _unitOfWork.SaveAsync();
                 return CreatedAtRoute("GetMcuIncludeByMacAddress", new { macAddress = mcu.McuMacAddress }, mcu);
@@ -96,6 +97,41 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Something went wrong in the {nameof(CreateMcu)}");
+                return StatusCode(500, "Internal server error. Please, try again later.");
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateMcu(int id, [FromBody] UpdateMcuDTO mcuDTO)
+        {
+            if (!ModelState.IsValid || id < 1)
+            {
+                _logger.LogError($"Invalid HTTP PUT request in {nameof(UpdateMcu)}");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var mcu = await _unitOfWork.mcu.GetAsync(x => x.Id == id);
+
+                if (mcu == null)
+                {
+                    _logger.LogError($"Invalid HTTP PUT request in {nameof(UpdateMcu)}");
+                    return BadRequest("Submitted invalid data");
+                }
+
+                _mapper.Map(mcuDTO, mcu);
+                _unitOfWork.mcu.UpdateAsync(mcu);
+                await _unitOfWork.SaveAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong in the {nameof(UpdateMcu)}");
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
         }
