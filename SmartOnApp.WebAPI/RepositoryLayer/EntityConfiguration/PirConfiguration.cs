@@ -19,6 +19,8 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
                 .HasColumnType("datetime");
             builder.Property(x => x.MotionIsDetected)
                 .HasColumnName("motion_is_detected");
+            builder.Property(x => x.IoTDeviceId)
+                .HasColumnName("iot_device_id");
             builder.HasOne(x => x.IoTDevice)
                 .WithMany(y => y.Pirs)
                 .HasForeignKey(y => y.IoTDeviceId)

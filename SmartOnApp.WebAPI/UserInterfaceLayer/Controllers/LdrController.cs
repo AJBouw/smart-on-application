@@ -79,7 +79,6 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
             }
         }
 
-        // TODO also update IoTDevice UpdatedAt ??
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -98,6 +97,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
 
                 await _unitOfWork.ldr.InsertAsync(ldr);
                 await _unitOfWork.SaveAsync();
+
                 return CreatedAtRoute("GetLdrIncludeById", new { id = ldr.Id }, ldr);
             }
             catch (Exception ex)
@@ -177,4 +177,3 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
         }
     }
 }
-

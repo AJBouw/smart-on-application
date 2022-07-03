@@ -33,38 +33,42 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("pir/all/{macAddress}", Name = "GetAllPirIncludeByMacAddress")]
+        [HttpGet("all", Name = "GetAllPirIncludeByMacAddress")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllPirIncludeByMacAddress(string macAddress)
+        public async Task<IActionResult> GetAllPirInclude()
         {
-            if (string.IsNullOrEmpty(macAddress))
-            {
-                return new BadRequestObjectResult("MAC address must not be null or empty");
-            }
-
             try
             {
-                var allPirIncludeByMacAddress = await _unitOfWork.pir.GetAllAsync(x => x.IoTDevice.Mcu.McuMacAddress == macAddress, include: y => y.Include(x => x.IoTDevice));
-                var result = _mapper.Map<IList<PirDTO>>(allPirIncludeByMacAddress);
+                var allPir = await _unitOfWork.pir.GetAllAsync(include: y => y.Include(x => x.IoTDevice));
+                var result = _mapper.Map<IList<PirDTO>>(allPir);
+
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllPirIncludeByMacAddress)}");
+                _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllPirInclude)}");
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
         }
 
-        [HttpGet("pir/{id:int}", Name = "GetPirIncludeById")]
+        [HttpGet("{id:int}", Name = "GetPirIncludeById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetPirIncludeById(int id)
         {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid HTTP GET request in {nameof(GetPirIncludeById)}" +
+                    $"{id} is invalid");
+                return BadRequest("Invalid id");
+            }
+
             try
             {
                 var pir = await _unitOfWork.pir.GetAsync(x => x.Id == id, include: y => y.Include(x => x.IoTDevice));
                 var result = _mapper.Map<PirDTO>(pir);
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -74,7 +78,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
             }
         }
 
-        [HttpPost("pir")]
+        [HttpPost()]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -100,6 +104,74 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
         }
+
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdatePir(int id, [FromBody] UpdatePirDTO pirDTO)
+        {
+            if (!ModelState.IsValid || id < 1)
+            {
+                _logger.LogError($"Invalid HTTP PUT request in {nameof(UpdatePir)}");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var pir = await _unitOfWork.pir.GetAsync(x => x.Id == id);
+
+                if (pir == null)
+                {
+                    _logger.LogError($"Invalid HTTP PUT request in {nameof(UpdatePir)}");
+                    return BadRequest("Submitted invalid data");
+                }
+
+                _mapper.Map(pirDTO, pir);
+                _unitOfWork.pir.UpdateAsync(pir);
+                await _unitOfWork.SaveAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong in the {nameof(UpdatePir)}");
+                return StatusCode(500, "Internal server error. Please, try again later.");
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeletePir(int id)
+        {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid HTTP PUT request in {nameof(DeletePir)}");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var ldr = await _unitOfWork.pir.GetAsync(x => x.Id == id);
+
+                if (ldr == null)
+                {
+                    _logger.LogError($"Invalid HTTP DELETE request in {nameof(DeletePir)}");
+                    return BadRequest("Submitted invalid data");
+                }
+
+                await _unitOfWork.pir.DeleteAsync(id);
+                await _unitOfWork.SaveAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong in the {nameof(DeletePir)}");
+                return StatusCode(500, "Internal server error. Please, try again later.");
+            }
+        }
     }
 }
-

@@ -33,38 +33,42 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("servo/all/{macAddress}", Name = "GetAllServoIncludeByMacAddress")]
+        [HttpGet("all", Name = "GetAllServoInclude")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllServoIncludeByMacAddress(string macAddress)
+        public async Task<IActionResult> GetAllServoInclude()
         {
-            if (string.IsNullOrEmpty(macAddress))
-            {
-                return new BadRequestObjectResult("MAC address must not be null or empty");
-            }
-
             try
             {
-                var allServoIncludeByMacAddress = await _unitOfWork.servo.GetAllAsync(x => x.IoTDevice.Mcu.McuMacAddress == macAddress, include: y => y.Include(x => x.IoTDevice));
-                var result = _mapper.Map<IList<ServoDTO>>(allServoIncludeByMacAddress);
+                var allServo = await _unitOfWork.servo.GetAllAsync(include: y => y.Include(x => x.IoTDevice).ThenInclude(z => z.Mcu));
+                var result = _mapper.Map<IList<ServoDTO>>(allServo);
+
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllServoIncludeByMacAddress)}");
+                _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllServoInclude)}");
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
         }
 
-        [HttpGet("servo/{id:int}", Name = "GetServoIncludeById")]
+        [HttpGet("{id:int}", Name = "GetServoIncludeById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetServoIncludeById(int id)
         {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid HTTP GET request in {nameof(GetServoIncludeById)}" +
+                    $"{id} is invalid");
+                return BadRequest("Invalid id");
+            }
+
             try
             {
                 var servo = await _unitOfWork.servo.GetAsync(x => x.Id == id, include: y => y.Include(x => x.IoTDevice));
                 var result = _mapper.Map<ServoDTO>(servo);
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -74,7 +78,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
             }
         }
 
-        [HttpPost("servo")]
+        [HttpPost()]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -92,6 +96,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
 
                 await _unitOfWork.servo.InsertAsync(servo);
                 await _unitOfWork.SaveAsync();
+
                 return CreatedAtRoute("GetServoIncludeById", new { id = servo.Id }, servo);
             }
             catch (Exception ex)
@@ -100,7 +105,74 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
         }
+
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateServo(int id, [FromBody] UpdateServoDTO servoDTO)
+        {
+            if (!ModelState.IsValid || id < 1)
+            {
+                _logger.LogError($"Invalid HTTP PUT request in {nameof(UpdateServo)}");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var servo = await _unitOfWork.servo.GetAsync(x => x.Id == id);
+
+                if (servo == null)
+                {
+                    _logger.LogError($"Invalid HTTP PUT request in {nameof(UpdateServo)}");
+                    return BadRequest("Submitted invalid data");
+                }
+
+                _mapper.Map(servoDTO, servo);
+                _unitOfWork.servo.UpdateAsync(servo);
+                await _unitOfWork.SaveAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong in the {nameof(UpdateServo)}");
+                return StatusCode(500, "Internal server error. Please, try again later.");
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteServo(int id)
+        {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid HTTP PUT request in {nameof(DeleteServo)}");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var servo = await _unitOfWork.servo.GetAsync(x => x.Id == id);
+
+                if (servo == null)
+                {
+                    _logger.LogError($"Invalid HTTP DELETE request in {nameof(DeleteServo)}");
+                    return BadRequest("Submitted invalid data");
+                }
+
+                await _unitOfWork.ldr.DeleteAsync(id);
+                await _unitOfWork.SaveAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong in the {nameof(DeleteServo)}");
+                return StatusCode(500, "Internal server error. Please, try again later.");
+            }
+        }
     }
-
 }
-
