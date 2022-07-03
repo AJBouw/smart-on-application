@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace SmartOnApp.WebAPI.UserInterfaceLayer.DataTransferObjects
 {
-    public class UpdateLdrDTO : CreateLightDTO
+    public class UpdateLdrDTO : CreateLdrDTO
     {
-        
     }
 }
+

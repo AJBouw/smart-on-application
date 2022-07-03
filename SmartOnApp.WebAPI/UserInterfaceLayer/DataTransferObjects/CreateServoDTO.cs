@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SmartOnApp.WebAPI.UserInterfaceLayer.DataTransferObjects
 {
-    public class CreateServoDTO : IoTDeviceDTO
+    public class CreateServoDTO
     {
-        public DateTime Timestamp { get; set; }
-
         [Range(0, 180)]
         public int ServoCurrentPosition { get; set; }
+
+        [Required]
+        public int IoTDeviceId { get; set; }
     }
 }

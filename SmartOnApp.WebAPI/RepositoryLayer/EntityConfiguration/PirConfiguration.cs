@@ -10,12 +10,19 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
         public void Configure(EntityTypeBuilder<Pir> builder)
         {
             builder.ToTable("pir");
+            builder.Property(x => x.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("pir_id");
             builder.Property(x => x.Timestamp)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("timestamp")
                 .HasColumnType("datetime");
             builder.Property(x => x.MotionIsDetected)
                 .HasColumnName("motion_is_detected");
+            builder.HasOne(x => x.IoTDevice)
+                .WithMany(y => y.Pirs)
+                .HasForeignKey(y => y.IoTDeviceId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

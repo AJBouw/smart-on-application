@@ -6,7 +6,9 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.DataTransferObjects
 {
     public class McuDTO : CreateMcuDTO
     {
+        [Required]
         public int Id { get; set; }
+        
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 

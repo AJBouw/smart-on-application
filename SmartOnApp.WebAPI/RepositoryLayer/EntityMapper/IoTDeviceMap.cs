@@ -27,9 +27,6 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
             builder.Property(x => x.IoTDeviceName)
                 .HasColumnName("iot_device_name")
                 .HasColumnType("VARCHAR(50)");
-            builder.Property(x => x.IoTDeviceType)
-                .HasColumnName("iot_device_type")
-                .HasColumnType("VARCHAR(20)");
             builder.HasOne(x => x.Mcu)
                 .WithMany(y => y.IoTDevices)
                 .HasForeignKey(x => x.McuId)

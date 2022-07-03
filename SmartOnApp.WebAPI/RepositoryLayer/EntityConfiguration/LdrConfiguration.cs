@@ -10,12 +10,21 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
         public void Configure(EntityTypeBuilder<Ldr> builder)
         {
             builder.ToTable("ldr");
+            builder.Property(x => x.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ldr_id");
             builder.Property(x => x.Timestamp)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("timestamp")
                 .HasColumnType("datetime");
             builder.Property(x => x.Brightness)
                 .HasColumnName("brightness");
+            builder.Property(x => x.IoTDeviceId)
+                .HasColumnName("iot_device_id");
+            builder.HasOne(x => x.IoTDevice)
+                .WithMany(y => y.Ldrs)
+                .HasForeignKey(y => y.IoTDeviceId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

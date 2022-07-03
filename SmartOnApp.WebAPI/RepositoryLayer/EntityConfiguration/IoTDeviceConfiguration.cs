@@ -23,8 +23,6 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
                 .HasColumnType("datetime");
             builder.Property(x => x.IoTDeviceName)
                 .HasColumnName("iot_device_name");
-            builder.Property(x => x.IoTDeviceType)
-                .HasColumnName("iot_device_type");
             builder.Property(x => x.McuId)
                 .HasColumnName("mcu_id");
             builder.HasOne(x => x.Mcu)

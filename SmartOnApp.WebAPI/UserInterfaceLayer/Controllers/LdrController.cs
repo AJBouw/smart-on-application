@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -15,49 +14,28 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class McuController : ControllerBase
+    public class LdrController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMcuRepository _mcuRepository;
-        private readonly ILogger<McuController> _logger;
+        private readonly ILdrRepository _ldrRepository;
+        private readonly ILogger<LdrController> _logger;
         private readonly IMapper _mapper;
 
-        public McuController(IUnitOfWork unitOfWork,
-            IMcuRepository mcuRepository,
-            ILogger<McuController> logger,
+        public LdrController(IUnitOfWork unitOfWork,
+            ILdrRepository ldrRepository,
+            ILogger<LdrController> logger,
             IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _mcuRepository = mcuRepository;
+            _ldrRepository = ldrRepository;
             _logger = logger;
             _mapper = mapper;
         }
 
-        // TODO include ldrs, lights, pirs, servos ??
-        [HttpGet]
+        [HttpGet("all/{macAddress}", Name = "GetAllLdrIncludeByMacAddress")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllMcuInclude()
-        {
-            try
-            {
-                var allMcu = await _unitOfWork.mcu.GetAllAsync(include:
-                    y => y.Include(x => x.IoTDevices)
-                    .ThenInclude(y => y.Ldrs));
-                var result = _mapper.Map<IList<McuDTO>>(allMcu);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllMcuInclude)}");
-                return StatusCode(500, "Internal server error. Please, try again later.");
-            }
-        }
-
-        [HttpGet("{macAddress}", Name = "GetMcuIncludeByMacAddress")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetMcuIncludeByMacAddress(string macAddress)
+        public async Task<IActionResult> GetAllLdrIncludeByMacAddress(string macAddress)
         {
             if (string.IsNullOrEmpty(macAddress))
             {
@@ -66,50 +44,59 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
 
             try
             {
-                var mcu = await _unitOfWork.mcu.GetAsync(x => x.McuMacAddress == macAddress, include: y => y.Include(x => x.IoTDevices));
-                var result = _mapper.Map<McuDTO>(mcu);
-
+                var allLdrIncludeByMacAddress = await _unitOfWork.ldr.GetAllAsync(include: y => y.Include(x => x.IoTDevice).ThenInclude(z => z.Mcu).ThenInclude(t => t.McuMacAddress));
+                var result = _mapper.Map<IList<LdrDTO>>(allLdrIncludeByMacAddress);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Something went wrong in the {nameof(GetMcuIncludeByMacAddress)}");
+                _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllLdrIncludeByMacAddress)}");
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
         }
 
-        [HttpPost]
+        [HttpGet("{id:int}", Name = "GetLdrIncludeById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetLdrIncludeById(int id)
+        {
+            try
+            {
+                var ldr = await _unitOfWork.ldr.GetAsync(x => x.Id == id, include: y => y.Include(x => x.IoTDevice));
+                var result = _mapper.Map<LdrDTO>(ldr);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong in the {nameof(GetLdrIncludeById)}");
+                return StatusCode(500, "Internal server errror. Please, try again later.");
+            }
+        }
+
+        // TODO also update IoTDevice UpdatedAt ??
+        [HttpPost("ldr")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateMcu([FromBody] CreateMcuDTO mcuDTO)
+        public async Task<IActionResult> InsertLdr([FromBody] CreateLdrDTO ldrDTO)
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogError($"Invalid HTTP POST request in {nameof(CreateMcu)}");
+                _logger.LogError($"Invalid HTTP PUT request in {nameof(InsertLdr)}");
                 return BadRequest(ModelState);
             }
 
             try
             {
-                var validateMcu = await _unitOfWork.mcu.GetAsync(x => x.McuMacAddress == mcuDTO.McuMacAddress);
+                var ldr = _mapper.Map<Ldr>(ldrDTO);
 
-                if (validateMcu != null)
-                {
-                    _logger.LogError($"Invalid MAC address. {mcuDTO.McuMacAddress} already exists");
-                    return BadRequest("Invalid MAC address. Please, update MCU with existing MAC address");
-                }
-
-                var mcu = _mapper.Map<Mcu>(mcuDTO);
-
-                await _unitOfWork.mcu.InsertAsync(mcu);
+                await _unitOfWork.ldr.InsertAsync(ldr);
                 await _unitOfWork.SaveAsync();
-
-                return CreatedAtRoute("GetMcuIncludeByMacAddress", new { macAddress = mcu.McuMacAddress }, mcu);
+                return CreatedAtRoute("GetLdrIncludeById", new { id = ldr.Id }, ldr);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Something went wrong in the {nameof(CreateMcu)}");
+                _logger.LogError(ex, $"Something went wrong in the {nameof(InsertLdr)}");
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
         }
@@ -118,33 +105,33 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateMcu(int id, [FromBody] UpdateMcuDTO mcuDTO)
+        public async Task<IActionResult> UpdateLdr(int id, [FromBody] UpdateLdrDTO ldrDTO)
         {
             if (!ModelState.IsValid || id < 1)
             {
-                _logger.LogError($"Invalid HTTP PUT request in {nameof(UpdateMcu)}");
+                _logger.LogError($"Invalid HTTP PUT request in {nameof(UpdateLdr)}");
                 return BadRequest(ModelState);
             }
 
             try
             {
-                var mcu = await _unitOfWork.mcu.GetAsync(x => x.Id == id);
+                var ldr = await _unitOfWork.ldr.GetAsync(x => x.Id == id);
 
-                if (mcu == null)
+                if (ldr == null)
                 {
-                    _logger.LogError($"Invalid HTTP PUT request in {nameof(UpdateMcu)}");
+                    _logger.LogError($"Invalid HTTP PUT request in {nameof(UpdateLdr)}");
                     return BadRequest("Submitted invalid data");
                 }
 
-                _mapper.Map(mcuDTO, mcu);
-                _unitOfWork.mcu.UpdateAsync(mcu);
+                _mapper.Map(ldrDTO, ldr);
+                _unitOfWork.ldr.UpdateAsync(ldr);
                 await _unitOfWork.SaveAsync();
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Something went wrong in the {nameof(UpdateMcu)}");
+                _logger.LogError(ex, $"Something went wrong in the {nameof(UpdateLdr)}");
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
         }
@@ -153,34 +140,35 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteMcu(int id)
+        public async Task<IActionResult> DeleteLdr(int id)
         {
             if (id < 1)
             {
-                _logger.LogError($"Invalid HTTP PUT request in {nameof(DeleteMcu)}");
+                _logger.LogError($"Invalid HTTP PUT request in {nameof(DeleteLdr)}");
                 return BadRequest(ModelState);
             }
 
             try
             {
-                var mcu = await _unitOfWork.mcu.GetAsync(x => x.Id == id);
+                var ldr = await _unitOfWork.ldr.GetAsync(x => x.Id == id);
 
-                if (mcu == null)
+                if (ldr == null)
                 {
-                    _logger.LogError($"Invalid HTTP DELETE request in {nameof(DeleteMcu)}");
+                    _logger.LogError($"Invalid HTTP DELETE request in {nameof(DeleteLdr)}");
                     return BadRequest("Submitted invalid data");
                 }
 
-                await _unitOfWork.mcu.DeleteAsync(id);
+                await _unitOfWork.ldr.DeleteAsync(id);
                 await _unitOfWork.SaveAsync();
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Something went wrong in the {nameof(DeleteMcu)}");
+                _logger.LogError(ex, $"Something went wrong in the {nameof(DeleteLdr)}");
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
         }
     }
 }
+

@@ -10,6 +10,10 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
         public void Configure(EntityTypeBuilder<Servo> builder)
         {
             builder.ToTable("servo");
+            builder.Property(x => x.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("servo_id")
+                .HasColumnType("INT");
             builder.Property(x => x.Timestamp)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("timestamp")
@@ -17,6 +21,10 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
             builder.Property(x => x.ServoCurrentPosition)
                 .HasColumnName("servo_current_position")
                 .HasColumnType("INT");
+            builder.HasOne(x => x.IoTDevice)
+                .WithMany(y => y.Servos)
+                .HasForeignKey(x => x.IoTDeviceId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

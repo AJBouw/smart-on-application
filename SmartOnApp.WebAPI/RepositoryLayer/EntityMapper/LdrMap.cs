@@ -10,6 +10,10 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
         public void Configure(EntityTypeBuilder<Ldr> builder)
         {
             builder.ToTable("ldr");
+            builder.Property(x => x.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ldr_id")
+                .HasColumnType("INT");
             builder.Property(x => x.Timestamp)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("timestamp")
@@ -17,6 +21,10 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityMapper
             builder.Property(x => x.Brightness)
                 .HasColumnName("brightness")
                 .HasColumnType("INT");
+            builder.HasOne(x => x.IoTDevice)
+                .WithMany(y => y.Ldrs)
+                .HasForeignKey(x => x.IoTDeviceId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
