@@ -32,38 +32,42 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("light/all/{macAddress}", Name = "GetAllLightIncludeByMacAddress")]
+        [HttpGet("all", Name = "GetAllLightInclude")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllLightIncludeByMacAddress(string macAddress)
+        public async Task<IActionResult> GetAllLightInclude()
         {
-            if (string.IsNullOrEmpty(macAddress))
-            {
-                return new BadRequestObjectResult("MAC address must not be null or empty");
-            }
-
             try
             {
-                var allLightIncludeByMacAddress = await _unitOfWork.light.GetAllAsync(x => x.IoTDevice.Mcu.McuMacAddress == macAddress, include: y => y.Include(x => x.IoTDevice));
-                var result = _mapper.Map<IList<LightDTO>>(allLightIncludeByMacAddress);
+                var allLight = await _unitOfWork.light.GetAllAsync(include: y => y.Include(x => x.IoTDevice).ThenInclude(z => z.Mcu));
+                var result = _mapper.Map<IList<LightDTO>>(allLight);
+
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllLightIncludeByMacAddress)}");
+                _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllLightInclude)}");
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
         }
 
-        [HttpGet("light/{id:int}", Name = "GetLightIncludeById")]
+        [HttpGet("{id:int}", Name = "GetLightIncludeById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetLightIncludeById(int id)
         {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid HTTP GET request in {nameof(GetLightIncludeById)}" +
+                    $"{id} is invalid");
+                return BadRequest("Invalid id");
+            }
+
             try
             {
                 var light = await _unitOfWork.light.GetAsync(x => x.Id == id, include: y => y.Include(x => x.IoTDevice));
                 var result = _mapper.Map<LightDTO>(light);
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -73,7 +77,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
             }
         }
 
-        [HttpPost("light")]
+        [HttpPost()]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -91,6 +95,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
 
                 await _unitOfWork.light.InsertAsync(light);
                 await _unitOfWork.SaveAsync();
+
                 return CreatedAtRoute("GetLightIncludeById", new { id = light.Id }, light);
             }
             catch (Exception ex)
@@ -99,6 +104,74 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
         }
+
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateLight(int id, [FromBody] UpdateLightDTO lightDTO)
+        {
+            if (!ModelState.IsValid || id < 1)
+            {
+                _logger.LogError($"Invalid HTTP PUT request in {nameof(UpdateLight)}");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var light = await _unitOfWork.light.GetAsync(x => x.Id == id);
+
+                if (light == null)
+                {
+                    _logger.LogError($"Invalid HTTP PUT request in {nameof(UpdateLight)}");
+                    return BadRequest("Submitted invalid data");
+                }
+
+                _mapper.Map(lightDTO, light);
+                _unitOfWork.light.UpdateAsync(light);
+                await _unitOfWork.SaveAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong in the {nameof(UpdateLight)}");
+                return StatusCode(500, "Internal server error. Please, try again later.");
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteLight(int id)
+        {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid HTTP PUT request in {nameof(DeleteLight)}");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var ldr = await _unitOfWork.light.GetAsync(x => x.Id == id);
+
+                if (ldr == null)
+                {
+                    _logger.LogError($"Invalid HTTP DELETE request in {nameof(DeleteLight)}");
+                    return BadRequest("Submitted invalid data");
+                }
+
+                await _unitOfWork.light.DeleteAsync(id);
+                await _unitOfWork.SaveAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Something went wrong in the {nameof(DeleteLight)}");
+                return StatusCode(500, "Internal server error. Please, try again later.");
+            }
+        }
     }
 }
-

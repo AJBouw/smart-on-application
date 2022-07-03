@@ -20,6 +20,8 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.EntityConfiguration
                 .HasColumnType("datetime");
             builder.Property(x => x.LightIsOn)
                 .HasColumnName("light_is_on");
+            builder.Property(x => x.IoTDeviceId)
+                .HasColumnName("iot_device_id");
             builder.HasOne(x => x.IoTDevice)
                 .WithMany(y => y.Lights)
                 .HasForeignKey(y => y.IoTDeviceId)
