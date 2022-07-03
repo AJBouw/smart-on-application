@@ -32,38 +32,44 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("all/{macAddress}", Name = "GetAllLdrIncludeByMacAddress")]
+        // Todo include ioTDevices and its ldrs, lights, pirs and servos ??
+        [HttpGet("all", Name = "GetAllLdrInclude")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllLdrIncludeByMacAddress(string macAddress)
+        public async Task<IActionResult> GetAllLdrInclude()
         {
-            if (string.IsNullOrEmpty(macAddress))
-            {
-                return new BadRequestObjectResult("MAC address must not be null or empty");
-            }
-
             try
             {
-                var allLdrIncludeByMacAddress = await _unitOfWork.ldr.GetAllAsync(include: y => y.Include(x => x.IoTDevice).ThenInclude(z => z.Mcu).ThenInclude(t => t.McuMacAddress));
-                var result = _mapper.Map<IList<LdrDTO>>(allLdrIncludeByMacAddress);
+                var allLdr = await _unitOfWork.ldr.GetAllAsync(include: y => y.Include(x => x.IoTDevice).ThenInclude(z => z.Mcu));
+                var result = _mapper.Map<IList<LdrDTO>>(allLdr);
+
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllLdrIncludeByMacAddress)}");
+                _logger.LogError(ex, $"Something went wrong in the {nameof(GetAllLdrInclude)}");
                 return StatusCode(500, "Internal server error. Please, try again later.");
             }
         }
 
+        // TODO include ldrs, lights, pirs, sensors ??
         [HttpGet("{id:int}", Name = "GetLdrIncludeById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetLdrIncludeById(int id)
         {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid HTTP GET request in {nameof(GetLdrIncludeById)}" +
+                    $"{id} is invalid");
+                return BadRequest("Invalid id");
+            }
+
             try
             {
                 var ldr = await _unitOfWork.ldr.GetAsync(x => x.Id == id, include: y => y.Include(x => x.IoTDevice));
                 var result = _mapper.Map<LdrDTO>(ldr);
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -74,7 +80,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
         }
 
         // TODO also update IoTDevice UpdatedAt ??
-        [HttpPost("ldr")]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
