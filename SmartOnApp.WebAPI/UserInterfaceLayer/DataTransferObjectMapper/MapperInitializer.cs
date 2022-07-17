@@ -13,6 +13,10 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.DataTransferObjectMapper
             CreateMap<IoTDevice, CreateIoTDeviceDTO>().ReverseMap();
             CreateMap<IoTDevice, UpdateIoTDeviceDTO>().ReverseMap();
 
+            CreateMap<Mcu, McuDTO>().ReverseMap();
+            CreateMap<Mcu, CreateMcuDTO>().ReverseMap();
+            CreateMap<Mcu, UpdateMcuDTO>().ReverseMap();
+
             CreateMap<Ldr, LdrDTO>().ReverseMap();
             CreateMap<Ldr, CreateLdrDTO>().ReverseMap();
             CreateMap<Ldr, UpdateLdrDTO>().ReverseMap();
@@ -20,10 +24,6 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.DataTransferObjectMapper
             CreateMap<Light, LightDTO>().ReverseMap();
             CreateMap<Light, CreateLightDTO>().ReverseMap();
             CreateMap<Light, UpdateLightDTO>().ReverseMap();
-
-            CreateMap<Mcu, McuDTO>().ReverseMap();
-            CreateMap<Mcu, CreateMcuDTO>().ReverseMap();
-            CreateMap<Mcu, UpdateMcuDTO>().ReverseMap();
 
             CreateMap<Pir, PirDTO>().ReverseMap();
             CreateMap<Pir, CreatePirDTO>().ReverseMap();
