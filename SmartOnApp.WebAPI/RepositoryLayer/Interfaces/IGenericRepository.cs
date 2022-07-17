@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore.Query;
 
 namespace SmartOnApp.WebAPI.RepositoryLayer.Interfaces
@@ -19,8 +20,8 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Interfaces
 
         Task InsertAsync(T entity);
         Task InsertRangeAsync(IEnumerable<T> entities);
-        Task DeleteAsync(int id);
-        void DeleteRangeAsync(IEnumerable<T> entities);
         void UpdateAsync(T entity);
+        Task DeleteAsync(int id);
+        void DeleteRangeAsync(IEnumerable<T> entities);   
     }
 }

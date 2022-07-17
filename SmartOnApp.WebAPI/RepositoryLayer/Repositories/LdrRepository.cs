@@ -17,13 +17,5 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Repositories
         {
             _db = db;
         }
-
-        public async Task<IEnumerable<Ldr>> GetAllLdrIncludeByMacAddressAsync(string macAddress)
-        {
-            return await _db.ldr
-                .Include(x => x.Mcu)
-                .ThenInclude(y => y.IoTDevices)
-                .ToListAsync();
-        }
     }
 }

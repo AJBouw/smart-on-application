@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using SmartOnApp.WebAPI.RepositoryLayer.Interfaces;
@@ -67,6 +68,12 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Repositories
             await _db.AddRangeAsync(entities);
         }
 
+        public void UpdateAsync(T entity)
+        {
+            _db.Attach(entity);
+            _smartOnDbContext.Entry(entity).State = EntityState.Modified;
+        }
+
         public async Task DeleteAsync(int id)
         {
             var entity = await _db.FindAsync(id);
@@ -76,12 +83,6 @@ namespace SmartOnApp.WebAPI.RepositoryLayer.Repositories
         public void DeleteRangeAsync(IEnumerable<T> entities)
         {
             _db.RemoveRange(entities);
-        }
-
-        public void UpdateAsync(T entity)
-        {
-            _db.Attach(entity);
-            _smartOnDbContext.Entry(entity).State = EntityState.Modified;
         }
     }
 }
