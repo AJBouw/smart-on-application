@@ -25,3 +25,4 @@
 /Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp.Shared/obj/Debug/net5.0/ref/SmartOnApp.Shared.dll
 /Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp.Shared/obj/Debug/net5.0/SmartOnApp.Shared.pdb
 /Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp.Shared/obj/Debug/net5.0/SmartOnApp.Shared.genruntimeconfig.cache
+/Users/angelajanebouw/Documents/HBO-ICT/Year3/FinalAssignment/Project/SmartOn/SmartOnApplication/SmartOnApp.Shared/bin/Debug/net5.0/SmartOnApp.Shared

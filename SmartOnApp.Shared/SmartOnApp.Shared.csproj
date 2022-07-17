@@ -2,19 +2,25 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="DomainLayer\" />
     <None Remove="DomainLayer\Models\" />
     <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+    <None Remove="DomainLayer\OpenWeatherModels\" />
+    <None Remove="DomainLayer\ConfigurationModels\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DomainLayer\" />
     <Folder Include="DomainLayer\Models\" />
+    <Folder Include="DomainLayer\OpenWeatherModels\" />
+    <Folder Include="DomainLayer\ConfigurationModels\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
   </ItemGroup>
 </Project>
