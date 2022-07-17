@@ -45,6 +45,7 @@ namespace SmartOnApp.WebAPI.UserInterfaceLayer.Controllers
                     y => y.Include(x => x.IoTDevices)
                     .ThenInclude(y => y.Ldrs));
                 var result = _mapper.Map<IList<McuDTO>>(allMcu);
+
                 return Ok(result);
             }
             catch (Exception ex)
