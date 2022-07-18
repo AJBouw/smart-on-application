@@ -10,6 +10,8 @@ using SmartOnApp.WebAPI.RepositoryLayer;
 using SmartOnApp.WebAPI.RepositoryLayer.Interfaces;
 using SmartOnApp.WebAPI.RepositoryLayer.Repositories;
 using SmartOnApp.WebAPI.UserInterfaceLayer.DataTransferObjectMapper;
+using SmartOnApp.WebAPI.Configuration;
+using SmartOnApp.Shared.DomainLayer.OpenWeatherModels;
 
 namespace SmartOnApp.WebAPI
 {
@@ -39,35 +41,26 @@ namespace SmartOnApp.WebAPI
             //services.AddControllers();
 
             // Register AutoMapper
-            services.AddAutoMapper(typeof(MapperInitializer));
+            services.AddConfigurationAutoMapper();
+
+            // Register OpenWeatherMap API Key
+            var openWeatherMapConfig = Configuration.GetSection("OpenWeatherMap");
+            services.Configure<OpenWeatherMapConfig>(openWeatherMapConfig);
+
+            // Register HttpClient
+            services.AddConfigurationIHttpClientFactory();
 
             // Register Swagger
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "SmartOn",
-                    Version = "v1"
-                });
-            });
+            services.AddConfigurationSwagger();
 
             // Register CORS policy so the API allows requests from JavaScript
             // Any allowed for demo purposes
-            services.AddCors(c =>
-            {
-                // Check this for security
-                c.AddPolicy("CorsPolicy", builder =>
-                    builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                );
-            });
+            services.AddConfigurationCors();
 
-
-            // Services injected
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IMcuRepository, McuRepository>();
-            services.AddScoped<ILdrRepository, LdrRepository>();
+            // Register Unit of Work and Repository Pattern
+            services.AddConfigurationUnitOfWorkPattern();
+            services.AddConfigurationRepositoryPattern();
+            services.AddConfigurationServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +71,11 @@ namespace SmartOnApp.WebAPI
                 app.UseDeveloperExceptionPage();
 
                 // Enable Swagger
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+            else
+            {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
