@@ -38,7 +38,6 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="2"
@@ -50,7 +49,6 @@
                 FontSize="20"
                 TextColor="#FFFFFF"
                 Text="{Binding DisplayedLocation}"/>
-
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="0"
@@ -68,7 +66,6 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="0"
@@ -80,7 +77,6 @@
                 FontSize="12"
                 TextColor="#FFFFFF"
                 Text="{Binding CurrentDate}"/>
-
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="0"
@@ -92,7 +88,6 @@
                 FontSize="32"
                 TextColor="#FFFFFF"
                 Text="{Binding CurrentTime}"/>
-
             <Image
                 BackgroundColor="#1e1e1e"
                 Grid.Column="3"
@@ -108,7 +103,6 @@
                         Glyph="{x:Static localfont:MaterialDesignIcon.Alarm}"/>
                 </Image.Source>
             </Image>
-
             <Image
                 BackgroundColor="#1e1e1e"
                 Grid.Column="0"
@@ -125,7 +119,6 @@
                         Glyph="{x:Static localfont:MaterialDesignIcon.Lightbulb}"/>
                 </Image.Source>
             </Image>
-
             <Label
                 x:Name="lightSwitchStateLabel"
                 BackgroundColor="#1e1e1e"
@@ -138,7 +131,6 @@
                 FontSize="22"
                 TextColor="#FFFFFF"
                 Text="{Binding LightStatus}"/>
-        
             <Switch
                 Grid.Column="0"
                 Grid.ColumnSpan="5"
@@ -146,7 +138,6 @@
                 OnColor="Orange"
                 ThumbColor="{x:StaticResource Aqua}"
                 HorizontalOptions="Center"/>
-
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="0"
@@ -164,7 +155,6 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-
             <Image
                 BackgroundColor="#1e1e1e"
                 Grid.Column="0"
@@ -180,7 +170,6 @@
                         Glyph="{x:Static localfont:MaterialDesignIcon.WeatherSunny}"/>
                 </Image.Source>
             </Image>
-
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="1"
@@ -192,7 +181,6 @@
                 FontSize="12"
                 TextColor="#FFFFFF"
                 Text="{Binding Sunrise}"/>
-
             <Image
                 BackgroundColor="#1e1e1e"
                 Grid.Column="2"
@@ -208,7 +196,6 @@
                         Glyph="{x:Static localfont:MaterialDesignIcon.WeatherNight}"/>
                 </Image.Source>
             </Image>
-
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="3"
@@ -221,8 +208,6 @@
                 TextColor="#FFFFFF"
                 Text="{Binding Sunset}"/>
         </Grid>
-        
     </ContentView.Content>
-
 </ContentView>
 

@@ -1,36 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:localfont="clr-namespace:SmartOnApp.Resources.Icons"
-             xmlns:landingpage="clr-namespace:SmartOnApp.Views.LandingPage"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:localfont="clr-namespace:SmartOnApp.Resources.Icons"
+             xmlns:localLandingPageView="clr-namespace:SmartOnApp.Views.LandingPage"
+             xmlns:localCameraPageView="clr-namespace:SmartOnApp.Views.CameraPage"
+             xmlns:localTimeSwitchPageView="clr-namespace:SmartOnApp.Views.TimeSwitchPage"
+             xmlns:localAboutPageView="clr-namespace:SmartOnApp.Views.AboutPage"
+             xmlns:localSettingsPageView="clr-namespace:SmartOnApp.Views.SettingsPage"
              x:Class="SmartOnApp.MainPage"
              NavigationPage.HasNavigationBar="False">
 
- <ContentPage.Resources>
+    <ContentPage.Resources>
         <ResourceDictionary>
-            <Color x:Key="Aqua">#3EC8C8</Color>
-            <Color x:Key="GrayLight">#aaaaaa</Color>
-            <Color x:Key="GrayBlack">#1e1e1e</Color>
-            <Color x:Key="WhiteBright">#ededed</Color>
-            <Color x:Key="WhiteLight">#FFFFFF</Color>
-
             <ControlTemplate
                 x:Key="TabItemControlTemplate">
                 <Grid
                     RowDefinitions="*,*"
                     RowSpacing="0"
                     BackgroundColor="{x:StaticResource GrayBlack}">
-
                     <Image
-                    Grid.Row="0"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    WidthRequest="25"
-                    HeightRequest="25"
-                    Margin="0,10,0,5"
-                    Source="{TemplateBinding CurrentIcon}"/>
-
+                        Grid.Row="0"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        WidthRequest="25"
+                        HeightRequest="25"
+                        Margin="0,10,0,5"
+                        Source="{TemplateBinding CurrentIcon}"/>
                     <Label
                         Grid.Row="1"
                         HorizontalOptions="Center"
@@ -39,7 +35,6 @@
                         Text="{TemplateBinding Text}"
                         TextColor="{x:StaticResource WhiteLight}"/>
                 </Grid>
-
             </ControlTemplate>
             <Style
                 x:Key="CustomTabStyle"
@@ -63,7 +58,6 @@
                 <xct:TabView.TabStripBackgroundView>
                     <BoxView Background="White" WidthRequest="30" CornerRadius="20,20,0,0"/>
                 </xct:TabView.TabStripBackgroundView>
-
                 <xct:TabViewItem
                     x:Name="Tab1"
                     ControlTemplate="{StaticResource TabItemControlTemplate}"
@@ -81,9 +75,8 @@
                             FontFamily="MaterialDesignIcons"
                             Glyph="{x:Static localfont:MaterialDesignIcon.Home}"/>
                     </xct:TabViewItem.IconSelected>
-                    <landingpage:LandingPageView></landingpage:LandingPageView>
+                    <localLandingPageView:LandingPageView></localLandingPageView:LandingPageView>
                 </xct:TabViewItem>
-
                 <xct:TabViewItem
                     x:Name="Tab2"
                     ControlTemplate="{StaticResource TabItemControlTemplate}"
@@ -101,8 +94,8 @@
                             FontFamily="MaterialDesignIcons"
                             Glyph="{x:Static localfont:MaterialDesignIcon.Video}"/>
                     </xct:TabViewItem.IconSelected>
+                    <localCameraPageView:CameraPageView></localCameraPageView:CameraPageView>
                 </xct:TabViewItem>
-
                 <xct:TabViewItem
                     x:Name="Tab3"
                     ControlTemplate="{StaticResource TabItemControlTemplate}"
@@ -120,9 +113,8 @@
                             FontFamily="MaterialDesignIcons"
                             Glyph="{x:Static localfont:MaterialDesignIcon.Calendar}"/>
                     </xct:TabViewItem.IconSelected>
-                    
+                    <localTimeSwitchPageView:TimeSwitchPageView></localTimeSwitchPageView:TimeSwitchPageView>
                 </xct:TabViewItem>
-
                 <xct:TabViewItem
                     x:Name="Tab4"
                     ControlTemplate="{StaticResource TabItemControlTemplate}"
@@ -140,9 +132,8 @@
                             FontFamily="MaterialDesignIcons"
                             Glyph="{x:Static localfont:MaterialDesignIcon.Information}"/>
                     </xct:TabViewItem.IconSelected>
-                    
+                    <localAboutPageView:AboutPageView></localAboutPageView:AboutPageView>
                 </xct:TabViewItem>
-
                 <xct:TabViewItem
                     x:Name="Tab5"
                     ControlTemplate="{StaticResource TabItemControlTemplate}"
@@ -160,7 +151,7 @@
                             FontFamily="MaterialDesignIcons"
                             Glyph="{x:Static localfont:MaterialDesignIcon.Cog}"/>
                     </xct:TabViewItem.IconSelected>
-                    
+                    <localSettingsPageView:SettingsPageView></localSettingsPageView:SettingsPageView>
                 </xct:TabViewItem>
             </xct:TabView>
         </Grid>
