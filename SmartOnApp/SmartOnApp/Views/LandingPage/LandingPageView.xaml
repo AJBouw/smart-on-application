@@ -3,18 +3,15 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:localfont="clr-namespace:SmartOnApp.Resources.Icons"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:SmartOnApp.ViewModels"
+    mc:Ignorable="d"
     x:Class="SmartOnApp.Views.LandingPage.LandingPageView">
 
-    <ContentView.Resources>
-        <ResourceDictionary>
-            <Color x:Key="Aqua">#3EC8C8</Color>
-            <Color x:Key="GrayLight">#aaaaaa</Color>
-            <Color x:Key="GrayBlack">#1e1e1e</Color>
-            <Color x:Key="WhiteBright">#ededed</Color>
-            <Color x:Key="WhiteLight">#FFFFFF</Color>
-
-        </ResourceDictionary>
-    </ContentView.Resources>
+    <ContentView.BindingContext>
+        <local:LandingPageViewModel/>
+    </ContentView.BindingContext>
 
     <ContentView.Content>
         <Grid
@@ -41,6 +38,7 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
+
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="2"
@@ -51,7 +49,8 @@
                 FontFamily="TimesNewRoman"
                 FontSize="20"
                 TextColor="#FFFFFF"
-                Text="Backyard Fence"/>
+                Text="{Binding DisplayedLocation}"/>
+
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="0"
@@ -65,10 +64,11 @@
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Last update"/>
-                        <Span Text="01-01-2022 00:00 AM"/>
+                        <Span Text="{Binding LastUpdate}"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
+
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="0"
@@ -79,7 +79,8 @@
                 FontFamily="TimesNewRoman"
                 FontSize="12"
                 TextColor="#FFFFFF"
-                Text="Wednesday 1 January 2022"/>
+                Text="{Binding CurrentDate}"/>
+
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="0"
@@ -90,13 +91,14 @@
                 FontFamily="TimesNewRoman"
                 FontSize="32"
                 TextColor="#FFFFFF"
-                Text="00:00 AM"/>
+                Text="{Binding CurrentTime}"/>
+
             <Image
                 BackgroundColor="#1e1e1e"
-                Grid.Column="2"
+                Grid.Column="3"
                 Grid.Row="4"
                 Margin="0,0,10,0"
-                HorizontalOptions="End"
+                HorizontalOptions="Start"
                 VerticalOptions="Center"
                 WidthRequest="50"
                 HeightRequest="50">
@@ -106,6 +108,7 @@
                         Glyph="{x:Static localfont:MaterialDesignIcon.Alarm}"/>
                 </Image.Source>
             </Image>
+
             <Image
                 BackgroundColor="#1e1e1e"
                 Grid.Column="0"
@@ -114,15 +117,17 @@
                 Margin="10,0,10,0"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                WidthRequest="250"
-                HeightRequest="250">
+                WidthRequest="150"
+                HeightRequest="150">
                 <Image.Source>
                     <FontImageSource
                         FontFamily="MaterialDesignIcons"
                         Glyph="{x:Static localfont:MaterialDesignIcon.Lightbulb}"/>
                 </Image.Source>
             </Image>
+
             <Label
+                x:Name="lightSwitchStateLabel"
                 BackgroundColor="#1e1e1e"
                 Grid.Column="0"
                 Grid.ColumnSpan="5"
@@ -132,7 +137,7 @@
                 FontFamily="TimesNewRoman"
                 FontSize="22"
                 TextColor="#FFFFFF"
-                Text="Off"/>
+                Text="{Binding LightStatus}"/>
         
             <Switch
                 Grid.Column="0"
@@ -141,6 +146,7 @@
                 OnColor="Orange"
                 ThumbColor="{x:StaticResource Aqua}"
                 HorizontalOptions="Center"/>
+
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="0"
@@ -154,21 +160,11 @@
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Brightness "/>
-                        <Span Text="855"/>
+                        <Span Text="{Binding Brightness}"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <Label
-                BackgroundColor="#1e1e1e"
-                Grid.Column="0"
-                Grid.ColumnSpan="5"
-                Grid.Row="9"
-                Margin="10,0,10,25"
-                HorizontalTextAlignment="Center"
-                FontFamily="TimesNewRoman"
-                FontSize="22"
-                TextColor="#FFFFFF"
-                Text="Bright"/>
+
             <Image
                 BackgroundColor="#1e1e1e"
                 Grid.Column="0"
@@ -184,6 +180,7 @@
                         Glyph="{x:Static localfont:MaterialDesignIcon.WeatherSunny}"/>
                 </Image.Source>
             </Image>
+
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="1"
@@ -194,7 +191,8 @@
                 FontFamily="TimesNewRoman"
                 FontSize="12"
                 TextColor="#FFFFFF"
-                Text="06:00 AM"/>
+                Text="{Binding Sunrise}"/>
+
             <Image
                 BackgroundColor="#1e1e1e"
                 Grid.Column="2"
@@ -210,6 +208,7 @@
                         Glyph="{x:Static localfont:MaterialDesignIcon.WeatherNight}"/>
                 </Image.Source>
             </Image>
+
             <Label
                 BackgroundColor="#1e1e1e"
                 Grid.Column="3"
@@ -220,9 +219,10 @@
                 FontFamily="TimesNewRoman"
                 FontSize="12"
                 TextColor="#FFFFFF"
-                Text="10:00 PM"/>
+                Text="{Binding Sunset}"/>
         </Grid>
         
     </ContentView.Content>
+
 </ContentView>
 
